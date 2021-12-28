@@ -75,6 +75,10 @@ export default class ConcurrentPriorityWorkerQueue<T, RT> {
         return this._maxPriority;
     }
 
+    public get length() {
+        return Array.from(this._length.values()).reduce((a, b) => a + b, 0);
+    }
+
     /**
      * Gets whether the queue is empty.
      */

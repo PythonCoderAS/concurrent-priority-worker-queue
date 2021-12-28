@@ -6,7 +6,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
-    "test": "tsc -p tsconfig.json && mocha index.test.js"
+    "test": "tsc -p tsconfig.json && mocha index.test.js --timeout 8000"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "@types/mocha": "^9.0.0",
     "chai": "^4.3.4",
     "mocha": "^9.1.3",
+    "sleep-promise": "^9.1.0",
     "typescript": "^4.5.4"
   },
   "dependencies": {
