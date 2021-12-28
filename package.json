@@ -16,9 +16,10 @@
     "node": ">=8.X.X"
   },
   "keywords": [
-    "array",
-    "string",
-    "map"
+    "concurrent",
+    "priority",
+    "worker",
+    "queue"
   ],
   "author": "PythonCoderAS <sarkaraoyan@gmail.com>",
   "license": "GNU General Public License v3.0",
