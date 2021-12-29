@@ -24,6 +24,7 @@ import Deque = require("double-ended-queue");
 interface ItemType<T, RT> {
     item: T;
     resolver: (result: RT) => void;
+    reject: (reason?: any) => void;
 }
 
 /**
@@ -63,9 +64,9 @@ export default class ConcurrentPriorityWorkerQueue<T, RT> {
             this._length.set(priority, 0);
         }
         this._maxPriority = Math.max(this._maxPriority, priority);
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             // The reason we do this is that we know it exists due to the check above.
-            this._map.get(priority)!.push({ item, resolver: resolve });
+            this._map.get(priority)!.push({ item, resolver: resolve, reject });
             this._length.set(priority, this._length.get(priority)! + 1);
             this._loop();
         });
@@ -108,6 +109,19 @@ export default class ConcurrentPriorityWorkerQueue<T, RT> {
         return this._running >= this.limit;
     }
 
+    private async processItem(item: ItemType<T, RT>){
+        this._running++;
+        try {
+            const result = await this.worker(item.item);
+            item.resolver(result);
+        } catch (error) {
+            item.reject(error);
+        } finally {
+            this._running--;
+            this._loop();
+        }
+    }
+
     private _loop(): void {
         if (this._running < this.limit && !this.isEmpty()) {
             const highestPriorityQueue = this._map.get(this._maxPriority)!;
@@ -121,12 +135,7 @@ export default class ConcurrentPriorityWorkerQueue<T, RT> {
                 this._maxPriority = Math.max(...Array.from(this._length.keys())
                     .filter((value) => value < this._maxPriority))
             }
-            this._running++;
-            this.worker(item.item).then((result: RT) => {
-                item.resolver(result);
-                this._running--;
-                this._loop();
-            });
+            this.processItem(item);
         }
     }
 }
