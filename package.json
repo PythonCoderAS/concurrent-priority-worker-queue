@@ -1,6 +1,6 @@
 {
   "name": "concurrent-priority-worker-queue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A priority worker queue that allows you to work with more than just integers and allows you to configure concurrency.",
   "type": "commonjs",
   "main": "index.js",
