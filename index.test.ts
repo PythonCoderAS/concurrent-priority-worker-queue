@@ -110,4 +110,18 @@ describe("Tests", () => {
         await Promise.all(promises)
         assert.deepEqual<number[]>(data, [500, 1000, 1500, 2000], "Data is [500, 1000, 1500, 2000]")
     })
+    it("Worker queue with error handling", async function () {
+        const queue = new ConcurrentPriorityWorkerQueue({
+            worker: async function () {
+                throw new Error("Test error")
+            },
+        })
+        let caughtError = false;
+        try {
+            await queue.enqueue(1000, 0)
+        } catch (e) {
+            caughtError = true;
+        }
+        assert.isTrue(caughtError, "Caught error successfully")
+    })
 })
