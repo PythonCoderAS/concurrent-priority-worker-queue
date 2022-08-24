@@ -21,8 +21,8 @@
     "worker",
     "queue"
   ],
-  "author": "PythonCoderAS <sarkaraoyan@gmail.com>",
-  "license": "GNU General Public License v3.0",
+  "author": "PythonCoderAS",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/PythonCoderAS/concurrent-priority-worker-queue/issues"
   },
