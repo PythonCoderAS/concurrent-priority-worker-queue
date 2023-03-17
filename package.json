@@ -35,7 +35,7 @@
     "chai": "^4.3.4",
     "mocha": "^10.0.0",
     "sleep-promise": "^9.1.0",
-    "typescript": "^4.5.4"
+    "typescript": "^5.0.2"
   },
   "dependencies": {
     "double-ended-queue": "^2.1.0-0"
