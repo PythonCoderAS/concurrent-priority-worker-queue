@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-node@v3.8.1
         with:
           node-version: '${{ matrix.node }}'
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install Dependencies
         run: npm ci
       - name: Run All Node.js Tests
